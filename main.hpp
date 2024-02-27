@@ -20,7 +20,7 @@ Student *makeStudent(int N);
 void printStudent(Student *head);
 int getLength(Student *head);
 Student *sortStudent(Student *head, int asc);
-Student *swapNode(Student *prev, Student *ptr, int asc);
+Student *swapNode(Student *prev, Student *ptr);
 
 Student *makeStudent(int N){
     //Read the file “student.txt” 
@@ -96,24 +96,24 @@ Student *sortStudent(Student *head, int asc){
             if (current->sum < nextNode->sum && asc == 1) { 
                 // Swap the nodes
                 if (current == head) {
-                    head = swapNode(NULL, current, asc);
+                    head = swapNode(NULL, current);
                 } else {
-                    swapNode(prev, current, asc);
+                    current = swapNode(prev, current);
                 }
                     
                 // Update prev for the next iteration
-                prev = nextNode;
+                current = nextNode;
                 nextNode = current->next;
             } else if(current->sum > nextNode->sum && asc == 0){
                 // Swap the nodes
                 if (current == head) {
-                    head = swapNode(NULL, current, asc);
+                    head = swapNode(NULL, current);
                 } else {
-                    swapNode(prev, current, asc);
+                    current = swapNode(prev, current);
                 }
                     
                 // Update prev for the next iteration
-                prev = nextNode;
+                current = nextNode;
                 nextNode = current->next;
             }else {
                 // Move to the next pair of nodes
@@ -126,7 +126,7 @@ Student *sortStudent(Student *head, int asc){
     return head;
 }
 
-Student *swapNode(Student *prev, Student*ptr, int asc){
+Student *swapNode(Student *prev, Student*ptr){
 
     Student *nextNode = ptr->next;
     ptr->next = nextNode->next;
