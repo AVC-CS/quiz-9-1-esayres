@@ -21,12 +21,35 @@ void printStudent(Student *head);
 int getLength(Student *head);
 Student *sortStudent(Student *head, int asc);
 
-Student *makeStudent(int N)
-{
-    /*******************************
-     * Code your program here
-     *******************************/
+Student *makeStudent(int N){
+    //Read the file “student.txt” 
+    //and construct the linked list with dynamic memory allocation and pointer variables
+    
+    ifstream file;
+    file.open("students.txt");
+    if(!file){
+        cerr << "FILE FAILED TO OPEN" << endl;
+        exit(0);
+    }
+
+    // create linked list
+    Student *head, *tmp, *prev;
+    for (int i = 0; i < N; i++){
+        tmp = new(Student);
+        //ID NAME SCORE[]SUM AVG NEXT*
+        file >> tmp->id >> tmp->name >> tmp->score[0] >> tmp->score[1];
+        tmp->sum = (tmp->score[0] + tmp->score[2]);
+        tmp->avg = (tmp->score[0] + tmp->score[1]) / 2;
+        tmp->next = NULL;
+        if (i == 0)
+            head = tmp;
+        else
+            prev->next = tmp;
+        prev = tmp;
+    }
+    return head;
 }
+
 void printStudent(Student *head)
 {
     Student *ptr = head;
