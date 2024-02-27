@@ -39,7 +39,7 @@ Student *makeStudent(int N){
         tmp = new(Student);
         //ID NAME SCORE[]SUM AVG NEXT*
         file >> tmp->id >> tmp->name >> tmp->score[0] >> tmp->score[1];
-        tmp->sum = (tmp->score[0] + tmp->score[2]);
+        tmp->sum = (tmp->score[0] + tmp->score[1]);
         tmp->avg = (tmp->score[0] + tmp->score[1]) / 2;
         tmp->next = NULL;
         if (i == 0)
@@ -118,8 +118,7 @@ Student *sortStudent(Student *head, int asc){
 Student *swapNode(Student *prev, Student*ptr, int asc){
     if(asc == 1){
         Student *nextNode = ptr->next;
-        ptr->next = nextNode->next;
-        nextNode->next = ptr;
+        nextNode->next = ptr; // change something here
         if (prev != NULL) {
             nextNode->next = prev;
         }
