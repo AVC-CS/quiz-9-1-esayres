@@ -22,22 +22,25 @@ int getLength(Student *head);
 Student *sortStudent(Student *head, int asc);
 Student *swapNode(Student *prev, Student *ptr);
 
-Student *makeStudent(int N){
-    //Read the file “student.txt” 
-    //and construct the linked list with dynamic memory allocation and pointer variables
-    
+Student *makeStudent(int N)
+{
+    // Read the file “student.txt”
+    // and construct the linked list with dynamic memory allocation and pointer variables
+
     ifstream file;
     file.open("students.txt");
-    if(!file){
+    if (!file)
+    {
         cerr << "FILE FAILED TO OPEN" << endl;
         exit(0);
     }
 
     // create linked list
     Student *head, *tmp, *prev;
-    for (int i = 0; i < N; i++){
-        tmp = new(Student);
-        //ID NAME SCORE[]SUM AVG NEXT*
+    for (int i = 0; i < N; i++)
+    {
+        tmp = new (Student);
+        // ID NAME SCORE[]SUM AVG NEXT*
         file >> tmp->id >> tmp->name >> tmp->score[0] >> tmp->score[1];
         tmp->sum = (tmp->score[0] + tmp->score[1]);
         tmp->avg = (tmp->score[0] + tmp->score[1]) / 2;
@@ -69,70 +72,86 @@ void printStudent(Student *head)
      * Code your program here
      *******************************/
 }
-int getLength(Student *head){
+int getLength(Student *head)
+{
     // gathers total length of Linked List
     Student *ptr = head;
     int cnt = 0;
-    while(ptr != NULL){
+    while (ptr != NULL)
+    {
         cnt++;
         ptr = ptr->next;
     }
     return cnt;
 }
-Student *sortStudent(Student *head, int asc){
+Student *sortStudent(Student *head, int asc)
+{
     int length = getLength(head);
-        
+
     if (length <= 1)
         return head;
 
     // bubble sort
-    for (int i = 0; i < length - 1; ++i) {
+    for (int i = 0; i < length - 1; ++i)
+    {
         Student *current = head;
         Student *nextNode = head->next;
         Student *prev = NULL; // Keep track of the previous node for swapping
 
-        for (int j = 0; j < length - i - 1 && nextNode != NULL; ++j) {
+        for (int j = 0; j < length - i - 1 && nextNode != NULL; ++j)
+        {
             // Compare values of adjacent nodes and swap if necessary
-            if (current->sum < nextNode->sum && asc == 1) { 
+            if (current->sum < nextNode->sum && asc == 1)
+            {
                 // Swap the nodes
-                if (current == head) {
+                if (current == head)
+                {
                     head = swapNode(NULL, current);
-                } else {
+                }
+                else
+                {
                     current = swapNode(prev, current);
                 }
-                    
                 // Update prev for the next iteration
-                current = nextNode;
-                nextNode = current->next;
-            } else if(current->sum > nextNode->sum && asc == 0){
-                // Swap the nodes
-                if (current == head) {
-                    head = swapNode(NULL, current);
-                } else {
-                    current = swapNode(prev, current);
-                }
-                    
-                // Update prev for the next iteration
-                current = nextNode;
-                nextNode = current->next;
-            }else {
-                // Move to the next pair of nodes
-                prev = current;
-                current = nextNode;
-                nextNode = nextNode->next;
+                // current = nextNode;
+                // nextNode = current->next;
             }
+            else if (current->sum > nextNode->sum && asc == 0)
+            {
+                // Swap the nodes
+                if (current == head)
+                {
+                    head = swapNode(NULL, current);
+                }
+                else
+                {
+                    current = swapNode(prev, current);
+                }
+
+                // Update prev for the next iteration
+                // current = nextNode;
+                // nextNode = current->next;
+            }
+            // Move to the next pair of nodes
+            prev = current;
+            current = current->next;
+            // current = nextNode;
+            // nextNode = nextNode->next;
+            nextNode = current->next;
         }
     }
     return head;
 }
 
-Student *swapNode(Student *prev, Student*ptr){
+Student *swapNode(Student *prev, Student *ptr)
+{
 
     Student *nextNode = ptr->next;
-    ptr->next = nextNode->next;
-    nextNode->next = ptr;
-    if (prev != NULL) {
+    if (prev != NULL)
+    {
         prev->next = nextNode;
     }
+    ptr->next = nextNode->next;
+    nextNode->next = ptr;
     return nextNode;
 }
