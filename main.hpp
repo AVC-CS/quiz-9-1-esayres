@@ -101,7 +101,7 @@ Student *sortStudent(Student *head, int asc)
         for (int j = 0; j < length - i - 1 && nextNode != NULL; ++j)
         {
             // Compare values of adjacent nodes and swap if necessary
-            if (current->sum < nextNode->sum && asc == 1)
+            if (current->sum > nextNode->sum && asc == 1)
             {
                 // Swap the nodes
                 if (current == head)
@@ -116,7 +116,7 @@ Student *sortStudent(Student *head, int asc)
                 // current = nextNode;
                 // nextNode = current->next;
             }
-            else if (current->sum > nextNode->sum && asc == 0)
+            else if (current->sum < nextNode->sum && asc == 0)
             {
                 // Swap the nodes
                 if (current == head)
